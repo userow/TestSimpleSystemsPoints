@@ -9,6 +9,7 @@
 typedef void (^ApiCallsSuccessBlock)(id object);
 typedef void (^ApiCallsFailureBlock)(NSError *error);
 
+@class PointModel;
 
 #import <Foundation/Foundation.h>
 
@@ -24,5 +25,12 @@ typedef void (^ApiCallsFailureBlock)(NSError *error);
 + (instancetype)new NS_UNAVAILABLE;
 
 
+
+- (void) addPointWithPoint:(PointModel *)point withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
+- (void) getAllPointsWithSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
+- (void) getPointWithId:(NSString *)id withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
+- (void) deletePointWithId:(NSString *)id withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
+- (void) editPointWithPoint:(PointModel *)point withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
+- (void) cancelRequests;
 
 @end

@@ -21,7 +21,7 @@
 
 @interface PointModel : NSObject
 
-@property (nonatomic, strong) NSString *idd;
+@property (nonatomic, strong) NSString *id;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *desc;
 @property (nonatomic, strong) NSNumber *lat;

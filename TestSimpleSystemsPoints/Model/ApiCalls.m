@@ -11,7 +11,7 @@
 #import "ApiCalls.h"
 #import "PointModel.h"
 
-static NSString *serverUrl = @"http://localhost:3000/";
+static NSString *serverUrl = @"http://localhost.charlesproxy.com:3000/";
 
 @interface ApiCalls ()
 
@@ -44,8 +44,6 @@ static NSString *serverUrl = @"http://localhost:3000/";
         NSURL *baseUrl = [NSURL URLWithString:serverUrl];
         self.objectManager = [RKObjectManager managerWithBaseURL:baseUrl];
         [self setupDescriptors];
-        
-        //        _defaultQuotes = [NSArray array];
     }
     
     return self;
@@ -58,14 +56,14 @@ static NSString *serverUrl = @"http://localhost:3000/";
     
     
     
-    RKResponseDescriptor *addPointResponseDescriptor =
-    [RKResponseDescriptor responseDescriptorWithMapping:pointMapping
-                                                 method:RKRequestMethodPOST
-                                            pathPattern:@"points"
-                                                keyPath:@""
-                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    
-    [self.objectManager addResponseDescriptor:addPointResponseDescriptor];
+//    RKResponseDescriptor *addPointResponseDescriptor =
+//    [RKResponseDescriptor responseDescriptorWithMapping:pointMapping
+//                                                 method:RKRequestMethodPOST
+//                                            pathPattern:@"points"
+//                                                keyPath:@""
+//                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+//    
+//    [self.objectManager addResponseDescriptor:addPointResponseDescriptor];
     
     
     
@@ -113,7 +111,10 @@ static NSString *serverUrl = @"http://localhost:3000/";
     [self.objectManager addResponseDescriptor:putPointsResponseDescriptor];
     
     
-    
+    [self.objectManager.router.routeSet
+     addRoute:[RKRoute routeWithClass:[PointModel class]
+                          pathPattern:@"points"
+                               method:RKRequestMethodPOST]];
     
     [self.objectManager.router.routeSet
      addRoute:[RKRoute routeWithClass:[PointModel class]
@@ -133,59 +134,173 @@ static NSString *serverUrl = @"http://localhost:3000/";
 
 #pragma mark - Public
 
-- (void) addPointWithPoint:(PointModel *)idd withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
+- (void) addPointWithPoint:(PointModel *)point withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
 {
-    
-}
-
-- (void) getAllPointsWithSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
-{
-    
-}
-
-- (void) getPointWithId:(NSString *)idd withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
-{
-    //// Using usual request, no operation
-    //    [self.objectManager getObjectsAtPath:requestPathString
-    //                              parameters:requestParametersDic
-    //                                 success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-    //                                     RKLogInfo(@"Load collection of quotes: %@", mappingResult.array);
-    //                                 } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-    //                                     RKLogError(@"Operation failed with error: %@", error);
-    //                                 }];
-    
-    // Get a user by user name.
-//    [[ApiCalls sharedCalls].objectManager getObject:[PointModel pointWithId:] path: parameters:
+ 
+// try 1 - fail
+//    [[ApiCalls sharedCalls].objectManager postObject:point path:@"points" parameters:nil
 //                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
 //                                                  // Do something with mappingResult.array
-//                                                  RKLogInfo(@"Loaded collection of quotes: %@", mappingResult.array);
-//                                                  
+//                                                  RKLogInfo(@"Loaded collection of poits: %@", mappingResult.array);
+//
 //                                                  if (success) {
-//                                                      success(mappingResult.array);
+//                                                      success(mappingResult.firstObject);
 //                                                  }
 //                                              }
 //                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
 //                                                  // Do something
 //                                                  RKLogError(@"Operation failed with error: %@", error);
-//                                                  
+//
 //                                                  if (failure) {
 //                                                      failure(error);
 //                                                  }
 //                                              }];
+    
+//// try 2 - fail
+//    RKObjectRequestOperation * operation =
+//    [[ApiCalls sharedCalls].objectManager appropriateObjectRequestOperationWithObject:point
+//                                                                               method:RKRequestMethodPOST
+//                                                                                 path:@"points"
+//                                                                           parameters:nil];
+//    __weak typeof(operation) weakOp = operation;
+//    operation.targetObject = nil;
+//    operation.completionBlock = ^void() {
+//        NSLog(@"%@", weakOp);
+//    };
+//    
+//    [[ApiCalls sharedCalls].objectManager enqueueObjectRequestOperation:operation];
+
+
+//// try 3
+    RKObjectMapping *requestMapping = [PointModel requestMapping];
+    requestMapping.assignsDefaultValueForMissingAttributes = NO;
+    
+    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping objectClass:[PointModel class] rootKeyPath:nil method:RKRequestMethodPOST];
+    
+    RKObjectMapping *responseMapping = [PointModel responseMapping];
+    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
+    RKResponseDescriptor *pointResponceDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping method:RKRequestMethodPOST pathPattern:@"points" keyPath:@"" statusCodes:statusCodes];
+    
+    
+    RKObjectManager *manager = [ApiCalls sharedCalls].objectManager;
+    manager.requestSerializationMIMEType = RKMIMETypeJSON;
+    [manager addRequestDescriptor:requestDescriptor];
+    [manager addResponseDescriptor:pointResponceDescriptor];
+    
+    [manager postObject:point path:@"points"
+             parameters:nil
+                success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                    RKLogInfo(@"Added point: %@", mappingResult.firstObject);
+                    
+                    if (success) {
+                        success(mappingResult.firstObject);
+                    }
+                } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                    // Do something
+                    RKLogError(@"Operation failed with points: %@", error);
+                    
+                    if (failure) {
+                        failure(error);
+                    }
+    }];
 }
 
-- (void) deletePointWithId:(NSString *)idd withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
+- (void) getAllPointsWithSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
 {
-    
+    [[ApiCalls sharedCalls].objectManager getObject:nil path:@"points" parameters:nil
+                                             success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                 // Do something with mappingResult.array
+                                                 RKLogInfo(@"Loaded collection of points: %@", mappingResult.array);
+                                                 
+                                                 if (success) {
+                                                     success(mappingResult.array);
+                                                 }
+                                             }
+                                             failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                 // Do something
+                                                 RKLogError(@"Operation failed with points: %@", error);
+                                                 
+                                                 if (failure) {
+                                                     failure(error);
+                                                 }
+                                             }];
+}
+
+- (void) getPointWithId:(NSString *)id withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
+{
+    // Get point by ID.
+    [[ApiCalls sharedCalls].objectManager getObject:[PointModel pointWithId:id]
+                                               path:@"points/:id"
+                                         parameters:nil
+                                              success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                  // Do something with mappingResult.array
+                                                  RKLogInfo(@"Loaded point: %@", mappingResult.firstObject);
+                                                  
+                                                  if (success) {
+                                                      success(mappingResult.firstObject);
+                                                  }
+                                              }
+                                              failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                  // Do something
+                                                  RKLogError(@"Operation failed with error: %@", error);
+                                                  
+                                                  if (failure) {
+                                                      failure(error);
+                                                  }
+                                              }];
+}
+
+- (void) deletePointWithId:(NSString *)id withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
+{
+    // Delete point by ID.
+    [[ApiCalls sharedCalls].objectManager deleteObject:[PointModel pointWithId:id]
+                                                  path:@"points/:id"
+                                            parameters:nil
+                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                    // Do something with mappingResult.array
+                                                    RKLogInfo(@"Deleted point: %@", mappingResult.firstObject);
+                                                
+                                                    if (success) {
+                                                        success(mappingResult.firstObject);
+                                                    }
+                                            }
+                                            failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                // Do something
+                                                RKLogError(@"Operation failed with error: %@", error);
+                                                
+                                                if (failure) {
+                                                    failure(error);
+                                                }
+                                            }];
 }
 
 - (void) editPointWithPoint:(PointModel *)point withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
 {
-    
+    [[ApiCalls sharedCalls].objectManager putObject:point
+                                                  path:@"points/:id"
+                                            parameters:nil
+                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                   // Do something with mappingResult.array
+                                                   RKLogInfo(@"Loaded point: %@", mappingResult.firstObject);
+                                                   
+                                                   if (success) {
+                                                       success(mappingResult.firstObject);
+                                                   }
+                                               }
+                                               failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                   // Do something
+                                                   RKLogError(@"Operation failed with error: %@", error);
+                                                   
+                                                   if (failure) {
+                                                       failure(error);
+                                                   }
+                                               }];
 }
-- (void)cancelRequests;
+
+- (void) cancelRequests;
 {
-//    [self.objectManager cancelAllObjectRequestOperationsWithMethod:RKRequestMethodGET matchingPathPattern:@"point"];
+    [self.objectManager cancelAllObjectRequestOperationsWithMethod:RKRequestMethodGET matchingPathPattern:@"points"];
+    [self.objectManager cancelAllObjectRequestOperationsWithMethod:RKRequestMethodGET matchingPathPattern:@"point/:id"];
 }
 
 

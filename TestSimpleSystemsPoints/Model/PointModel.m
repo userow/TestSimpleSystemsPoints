@@ -16,30 +16,38 @@
 + (RKObjectMapping *)responseMapping;
 {
     RKObjectMapping *pointMaping = [RKObjectMapping mappingForClass:[PointModel class]];
-    [pointMaping addAttributeMappingsFromDictionary:@{
-                                                      @"id"    : @"idd",
-                                                      @"title" : @"title",
-                                                      @"desc"  : @"desc",
-                                                      @"lat"   : @"lat",
-                                                      @"lon"   : @"lon"
-                                                      }];
-    
+    [pointMaping addAttributeMappingsFromArray:
+    @[@"id",
+    @"title",
+    @"desc",
+    @"lat",
+    @"lng"
+    ]];
+
     return pointMaping;
 }
 
 + (RKObjectMapping *)requestMapping;
 {
-    return [[PointModel requestMapping] inverseMapping];
+    RKObjectMapping *pointMaping = [RKObjectMapping requestMapping];
+    
+    [pointMaping addAttributeMappingsFromArray:
+     @[@"title",
+     @"desc",
+     @"lat",
+     @"lng"]];
+    
+    return pointMaping;
 }
 
 - (NSString *)description {
-    NSString *des = [NSString stringWithFormat:@""
-                     "idd   = %@\r"
+    NSString *des = [NSString stringWithFormat:@"\r"
+                     "id   = %@\r"
                      "title = %@\r"
                      "desc  = %@\r"
                      "lat   = %f\r"
                      "lng   = %f\r",
-                     self.idd,
+                     self.id,
                      self.title,
                      self.desc,
                      [self.lat floatValue],
@@ -49,10 +57,10 @@
     return des;
 }
 
-+ (instancetype)pointWithId:(NSString*)idd;
++ (instancetype)pointWithId:(NSString*)id;
 {
     PointModel *point = [PointModel new];
-    point.idd = idd;
+    point.id = id;
     
     return point;
 }
