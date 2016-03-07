@@ -11,6 +11,9 @@ typedef void (^ApiCallsFailureBlock)(NSError *error);
 
 @class PointModel;
 
+// Declare constants.
+extern NSString *const kApiCallsListPointsRouteName;
+
 #import <Foundation/Foundation.h>
 
 @interface ApiCalls : NSObject
@@ -27,7 +30,7 @@ typedef void (^ApiCallsFailureBlock)(NSError *error);
 
 
 - (void) addPointWithPoint:(PointModel *)point withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
-- (void) getAllPointsWithSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
+- (void) listAllPointsWithSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
 - (void) getPointWithId:(NSString *)id withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
 - (void) deletePointWithId:(NSString *)id withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;
 - (void) editPointWithPoint:(PointModel *)point withSuccess:(ApiCallsSuccessBlock)success andFailure:(ApiCallsFailureBlock)failure;

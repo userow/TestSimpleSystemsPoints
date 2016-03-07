@@ -16,38 +16,49 @@
 + (RKObjectMapping *)responseMapping;
 {
     RKObjectMapping *pointMaping = [RKObjectMapping mappingForClass:[PointModel class]];
-    [pointMaping addAttributeMappingsFromArray:
-    @[@"id",
-    @"title",
-    @"desc",
-    @"lat",
-    @"lng"
-    ]];
-
+    [pointMaping addAttributeMappingsFromDictionary:@{
+                                                      @"id"    : @"idd",
+                                                      @"title" : @"title",
+                                                      @"desc"  : @"desc",
+                                                      @"lat"   : @"lat",
+                                                      @"lng"   : @"lng"
+                                                      }];
+    
     return pointMaping;
 }
 
 + (RKObjectMapping *)requestMapping;
 {
+    RKObjectMapping *pointMapping = [RKObjectMapping requestMapping];
+    
+    [pointMapping addAttributeMappingsFromDictionary:@{
+                                                       @"idd"   : @"id",
+                                                       @"title" : @"title",
+                                                       @"desc"  : @"desc",
+                                                       @"lat"   : @"lat",
+                                                       @"lng"   : @"lng"
+                                                       }];
+    pointMapping.assignsDefaultValueForMissingAttributes = NO;
+    return pointMapping;
+}
+
++ (RKObjectMapping *)requestIdMapping;
+{
     RKObjectMapping *pointMaping = [RKObjectMapping requestMapping];
     
-    [pointMaping addAttributeMappingsFromArray:
-     @[@"title",
-     @"desc",
-     @"lat",
-     @"lng"]];
+    [pointMaping addAttributeMappingsFromDictionary:@{@"idd" : @"id"}];
     
     return pointMaping;
 }
 
 - (NSString *)description {
     NSString *des = [NSString stringWithFormat:@"\r"
-                     "id   = %@\r"
+                     "idd   = %@\r"
                      "title = %@\r"
                      "desc  = %@\r"
                      "lat   = %f\r"
                      "lng   = %f\r",
-                     self.id,
+                     self.idd,
                      self.title,
                      self.desc,
                      [self.lat floatValue],
@@ -57,10 +68,10 @@
     return des;
 }
 
-+ (instancetype)pointWithId:(NSString*)id;
++ (instancetype)pointWithId:(NSString*)idd;
 {
     PointModel *point = [PointModel new];
-    point.id = id;
+    point.idd = idd;
     
     return point;
 }

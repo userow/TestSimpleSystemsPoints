@@ -24,6 +24,10 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     [self setupUI];
+}
+
+- (void)viewDidAppear:(BOOL)animated;
+{
     [self testApi];
 }
 
@@ -36,9 +40,9 @@
     
     PointModel * newPoint = [PointModel new];
     
-    newPoint.title = @"Test Point 1";
-    newPoint.lat = @0.0;
-    newPoint.lng = @0.0;
+    newPoint.title = @"Test Point Zulu";
+    newPoint.lat = @0.1;
+    newPoint.lng = @0.1;
     
     
     [[ApiCalls sharedCalls] addPointWithPoint:newPoint withSuccess:^(id object) {
@@ -47,8 +51,13 @@
         ;
     }];
     
-    [[ApiCalls sharedCalls] getAllPointsWithSuccess:^(id object) {
-        ;
+    [[ApiCalls sharedCalls] listAllPointsWithSuccess:^(id object) {
+        PointModel * point = [object lastObject];
+        [[ApiCalls sharedCalls] getPointWithId:point.idd withSuccess:^(id object) {
+            ;
+        } andFailure:^(NSError *error) {
+            ;
+        }];
     } andFailure:^(NSError *error) {
         ;
     }];
