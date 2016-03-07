@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9421E5F44E7EC4C0A1606474 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520A7B44D19E9E219212D7FF /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C4C7B22FACC0CCA0AA49CA61 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A8517573312CB0E3A24C3EB /* libPods.a */; };
 		CD05AF9E1C8C8EE50038F191 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CD05AF9D1C8C8EE50038F191 /* main.m */; };
 		CD05AFA11C8C8EE50038F191 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CD05AFA01C8C8EE50038F191 /* AppDelegate.m */; };
 		CD05AFA91C8C8EE50038F191 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD05AFA81C8C8EE50038F191 /* Assets.xcassets */; };
@@ -15,12 +15,13 @@
 		CD05AFBA1C8CB2F50038F191 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD05AFB91C8CB2F50038F191 /* ViewController.m */; };
 		CD88D4BA1C90F117006628C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD88D4B91C90F117006628C1 /* Foundation.framework */; };
 		CD88D4BE1C914FDD006628C1 /* ApiCalls.m in Sources */ = {isa = PBXBuildFile; fileRef = CD88D4BD1C914FDD006628C1 /* ApiCalls.m */; };
+		CD88D4C11C914FDD006628C1 /* PointModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CD88D4C01C914FDD006628C1 /* PointModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		26CED8C0E69A2B1EB78089C5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		32269F77FBE619DA02272781 /* Pods_TestSimpleSystemsPoints.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestSimpleSystemsPoints.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		520A7B44D19E9E219212D7FF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A8517573312CB0E3A24C3EB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACB83257F42C515AC9A3A2C1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CD05AF991C8C8EE50038F191 /* TestSimpleSystemsPoints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestSimpleSystemsPoints.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD05AF9D1C8C8EE50038F191 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -34,6 +35,8 @@
 		CD88D4B91C90F117006628C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CD88D4BC1C914FDD006628C1 /* ApiCalls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiCalls.h; sourceTree = "<group>"; };
 		CD88D4BD1C914FDD006628C1 /* ApiCalls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiCalls.m; sourceTree = "<group>"; };
+		CD88D4BF1C914FDD006628C1 /* PointModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointModel.h; sourceTree = "<group>"; };
+		CD88D4C01C914FDD006628C1 /* PointModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +45,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD88D4BA1C90F117006628C1 /* Foundation.framework in Frameworks */,
-				9421E5F44E7EC4C0A1606474 /* Pods.framework in Frameworks */,
+				C4C7B22FACC0CCA0AA49CA61 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,7 +57,7 @@
 			children = (
 				CD88D4B91C90F117006628C1 /* Foundation.framework */,
 				32269F77FBE619DA02272781 /* Pods_TestSimpleSystemsPoints.framework */,
-				520A7B44D19E9E219212D7FF /* Pods.framework */,
+				6A8517573312CB0E3A24C3EB /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -123,6 +126,8 @@
 			children = (
 				CD88D4BC1C914FDD006628C1 /* ApiCalls.h */,
 				CD88D4BD1C914FDD006628C1 /* ApiCalls.m */,
+				CD88D4BF1C914FDD006628C1 /* PointModel.h */,
+				CD88D4C01C914FDD006628C1 /* PointModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -138,7 +143,6 @@
 				CD05AF951C8C8EE50038F191 /* Sources */,
 				CD05AF961C8C8EE50038F191 /* Frameworks */,
 				CD05AF971C8C8EE50038F191 /* Resources */,
-				9B3D3CA7B2E820C952E28494 /* Embed Pods Frameworks */,
 				4487CD9E029DF7E98938A7F4 /* Copy Pods Resources */,
 			);
 			buildRules = (
@@ -210,21 +214,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9B3D3CA7B2E820C952E28494 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		E39904A799D52D2161B13970 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -248,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD05AFBA1C8CB2F50038F191 /* ViewController.m in Sources */,
+				CD88D4C11C914FDD006628C1 /* PointModel.m in Sources */,
 				CD05AFA11C8C8EE50038F191 /* AppDelegate.m in Sources */,
 				CD88D4BE1C914FDD006628C1 /* ApiCalls.m in Sources */,
 				CD05AF9E1C8C8EE50038F191 /* main.m in Sources */,
@@ -345,7 +335,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TestSimpleSystemsPoints/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.TestSimpleSystemsPoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -358,7 +348,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TestSimpleSystemsPoints/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.test.TestSimpleSystemsPoints;
 				PRODUCT_NAME = "$(TARGET_NAME)";
